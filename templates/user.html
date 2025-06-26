@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실시간 투자 게임 - 사용자</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <!-- 사용자 게임 화면 -->
+      <section id="user-dashboard">
+        <header>
+          <hgroup>
+            <h2 id="user-welcome-msg"></h2>
+            <p><strong>포인트:</strong> <span id="user-points"></span></p>
+          </hgroup>
+          <button id="user-logout-btn" class="secondary">로그아웃</button>
+        </header>
+        <h4
+          id="user-round-timer"
+          style="text-align: center; display: none"
+        ></h4>
+        <div id="user-game-view"></div>
+        <div
+          id="user-hint-request-view"
+          style="margin-top: 2rem; display: none"
+        >
+          <h4>힌트 요청</h4>
+          <p>
+            원하는 종목의 힌트를 요청할 수 있습니다. 각 종목은 한 번만 요청할 수
+            있습니다.
+          </p>
+          <div id="hint-stocks-container" class="grid"></div>
+        </div>
+        <div id="user-history" style="margin-top: 2rem">
+          <h4>투자 기록</h4>
+          <figure>
+            <table role="grid">
+              <thead>
+                <tr>
+                  <th>연도</th>
+                  <th>상세 내역</th>
+                  <th>총 손익</th>
+                  <th>종료 후 포인트</th>
+                </tr>
+              </thead>
+              <tbody id="user-history-body"></tbody>
+            </table>
+          </figure>
+        </div>
+      </section>
+    </main>
+    <dialog id="hint-modal">
+      <article>
+        <header>
+          <h3 id="hint-modal-title">힌트 확인</h3>
+        </header>
+        <div id="hint-modal-content"></div>
+        <div
+          style="
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+          "
+        >
+          <button
+            class="close-modal"
+            onclick="this.closest('dialog').close()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+      </article>
+    </dialog>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+  </body>
+</html>

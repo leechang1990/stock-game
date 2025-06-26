@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실시간 투자 게임</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <!-- 로그인 섹션 -->
+      <section id="login-section">
+        <header><h1>실시간 투자 게임</h1></header>
+        <form id="login-form">
+          <input type="text" id="username" placeholder="사용자 이름" required />
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호 (관리자용)"
+            style="display: none"
+          />
+          <button type="submit">로그인 / 게임 참가</button>
+        </form>
+        <p id="login-message"></p>
+      </section>
+
+      <!-- 관리자 대시보드 -->
+      <section id="admin-dashboard" style="display: none">
+        <header class="grid">
+          <div><h2>관리자 대시보드</h2></div>
+          <div>
+            <button id="admin-logout-btn" class="secondary outline">
+              로그아웃
+            </button>
+          </div>
+        </header>
+        <article>
+          <h4>게임 제어</h4>
+          <p>
+            <strong>현재 상태:</strong>
+            <span id="admin-game-status">게임 상태를 불러오는 중...</span>
+          </p>
+          <div class="grid">
+            <button id="start-round-btn">라운드 시작</button>
+            <button id="start-investment-btn" style="display: none">
+              투자 시작
+            </button>
+            <button id="end-round-btn" disabled>라운드 종료</button>
+          </div>
+        </article>
+        <!-- 유튜브 영상 영역 -->
+        <div
+          id="youtube-video-container"
+          style="margin: 2rem 0; text-align: center"
+        >
+          <iframe
+            id="youtube-video-frame"
+            width="560"
+            height="315"
+            src=""
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="display: none"
+          ></iframe>
+        </div>
+        <article id="admin-results-container" style="display: none">
+          <h4><span id="admin-results-year"></span>년도 결과</h4>
+          <canvas
+            id="admin-bar-chart"
+            style="max-width: 100%; margin-top: 2rem; display: none"
+          ></canvas>
+          <div id="admin-results-table"></div>
+        </article>
+        <div
+          id="admin-hint-requests-container"
+          style="display: none; margin-top: 2rem"
+        >
+          <h4>힌트 요청 목록</h4>
+          <div id="admin-hint-requests-table"></div>
+        </div>
+        <!-- 부활 요청 목록 (힌트 요청 바로 아래) -->
+        <div
+          id="admin-revive-requests-container"
+          style="display: none; margin-top: 2rem"
+        ></div>
+        <div id="admin-round-info" style="display: none; margin-top: 1rem">
+          <h4 id="admin-round-timer"></h4>
+          <div id="admin-investment-status"></div>
+        </div>
+        <div
+          id="admin-user-list-container"
+          style="display: none; margin-top: 2rem"
+        >
+          <h4 id="admin-user-count"></h4>
+          <div id="admin-user-list-table"></div>
+        </div>
+        <!-- 전체 참가자 순위표 영역 -->
+        <div
+          id="admin-ranking-container"
+          style="display: none; margin-top: 2rem"
+        ></div>
+        <!-- 종목 설명 그리드 영역 -->
+        <div
+          id="admin-stock-labels-container"
+          style="display: none; margin-top: 2rem"
+        ></div>
+      </section>
+
+      <!-- 사용자 게임 화면 -->
+      <section id="user-dashboard" style="display: none">
+        <header>
+          <hgroup>
+            <h2 id="user-welcome-msg"></h2>
+            <p><strong>포인트:</strong> <span id="user-points"></span></p>
+          </hgroup>
+          <button id="user-logout-btn" class="secondary">로그아웃</button>
+        </header>
+        <h4
+          id="user-round-timer"
+          style="text-align: center; display: none"
+        ></h4>
+        <div id="user-game-view"></div>
+
+        <div
+          id="user-hint-request-view"
+          style="margin-top: 2rem; display: none"
+        >
+          <h4>힌트 요청</h4>
+          <p>
+            원하는 종목의 힌트를 요청할 수 있습니다. 각 종목은 한 번만 요청할 수
+            있습니다.
+          </p>
+          <div id="hint-stocks-container" class="grid"></div>
+        </div>
+
+        <div id="user-history" style="margin-top: 2rem">
+          <h4>투자 기록</h4>
+          <figure>
+            <table role="grid">
+              <thead>
+                <tr>
+                  <th>연도</th>
+                  <th>상세 내역</th>
+                  <th>총 손익</th>
+                  <th>종료 후 포인트</th>
+                </tr>
+              </thead>
+              <tbody id="user-history-body"></tbody>
+            </table>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <!-- 힌트 확인 모달 -->
+    <dialog id="hint-modal">
+      <article>
+        <header>
+          <h3 id="hint-modal-title">힌트 확인</h3>
+        </header>
+        <div id="hint-modal-content"></div>
+        <div
+          style="
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+          "
+        >
+          <button
+            class="close-modal"
+            onclick="this.closest('dialog').close()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+      </article>
+    </dialog>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

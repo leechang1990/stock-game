@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실시간 투자 게임 - 로그인</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <!-- 로그인 섹션 -->
+      <section id="login-section">
+        <header><h1>실시간 투자 게임</h1></header>
+        <form id="login-form">
+          <input type="text" id="username" placeholder="사용자 이름" required />
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호 (관리자용)"
+            style="display: none"
+          />
+          <button type="submit">로그인 / 게임 참가</button>
+        </form>
+        <p id="login-message"></p>
+      </section>
+    </main>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  </body>
+</html>

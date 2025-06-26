@@ -1,0 +1,278 @@
+/* 스타일은 여기에 작성합니다. */
+
+body {
+  font-family: sans-serif;
+  margin: 2em;
+}
+
+h1,
+h2 {
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+main.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+article {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 0.5rem;
+}
+
+/* 힌트 요청 관련 스타일 */
+.stock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.stock-request-container {
+  width: 100%;
+  text-align: center;
+}
+
+.stock-hint-btn {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.stock-hint-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.request-hint-btn {
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.request-hint-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* 상태 표시 스타일 */
+.success {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.warning {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.error {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* 관리자 대시보드 스타일 */
+#admin-hint-requests-container {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+#admin-hint-requests-container h4 {
+  margin-top: 0;
+  color: #495057;
+}
+
+/* 사용자 힌트 뷰 스타일 */
+#user-hint-view {
+  background-color: #e8f5e8;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #28a745;
+}
+
+#user-hint-view h4 {
+  margin-top: 0;
+  color: #155724;
+}
+
+#user-hints-revealed div {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  border-left: 4px solid #28a745;
+}
+
+/* 힌트 아이템 스타일 */
+.hint-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-hint-btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.view-hint-btn:hover {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* 반응형 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.stock-item,
+.stock-hint-btn {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 힌트 모달 스타일 */
+#hint-modal {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+}
+
+#hint-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#hint-modal article {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+#hint-modal header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e1e1e1;
+  background-color: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+#hint-modal h3 {
+  margin: 0;
+  color: #495057;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+#hint-modal-content {
+  padding: 1.5rem;
+}
+
+.hint-content {
+  line-height: 1.6;
+}
+
+.hint-text {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+  font-size: 1.1rem;
+}
+
+/* 힌트 확인 버튼 스타일 */
+.stock-hint-btn.primary {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.stock-hint-btn.primary:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
