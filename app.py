@@ -491,4 +491,4 @@ def check_session():
         return jsonify({"logged_in": True, "is_admin": False, "user": user_info})
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True,port=5001) 
+    socketio.run(app, host='0.0.0.0', port=10000) 
