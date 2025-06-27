@@ -743,6 +743,7 @@ document.addEventListener("DOMContentLoaded", () => {
             leverageInput.min = "1";
             leverageInput.max = "100";
             leverageInput.value = "1";
+            leverageInput.inputMode = "numeric";
             leverageInput.style.marginLeft = "0.5rem";
             grid.appendChild(leverageLabel);
             grid.appendChild(leverageInput);
